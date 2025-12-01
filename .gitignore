@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+env/
+.venv/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.flaskenv
+
+# Models
+.models/
