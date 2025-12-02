@@ -4,7 +4,7 @@ from io import BytesIO
 
 from app.detector import MasonDetector
 from app.embedding import EmbeddingExtractor
-from app.preprocessor import enhance_for_yolo # Corrected import
+from app.preprocessor import enhance_for_yolo
 
 app = FastAPI()
 
