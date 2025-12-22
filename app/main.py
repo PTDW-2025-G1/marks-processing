@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
-from PIL import Image
+from PIL import Image, ImageOps
 from io import BytesIO
 
 from app.detector import MasonDetector
@@ -15,20 +15,24 @@ embedder = EmbeddingExtractor()
 @app.post("/process")
 async def process_image(file: UploadFile = File(...)):
     img_bytes = await file.read()
-    image = Image.open(BytesIO(img_bytes)).convert("RGB")
+
+    image = Image.open(BytesIO(img_bytes))
+    image = ImageOps.exif_transpose(image).convert("RGB")
 
     image = enhance_for_yolo(image)
     cropped = detector.detect(image)
 
+    print("isMasonMark:", cropped is not None)
+
     if cropped is None:
         return {
-            "is_mark": False,
+            "isMasonMark": False,
             "embedding": None
         }
 
     vector = embedder.vectorize(cropped)
 
     return {
-        "is_mark": True,
+        "isMasonMark": True,
         "embedding": vector
     }
