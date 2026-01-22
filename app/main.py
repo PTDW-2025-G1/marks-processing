@@ -24,15 +24,10 @@ async def process_image(file: UploadFile = File(...)):
 
     print("isMasonMark:", cropped is not None)
 
-    if cropped is None:
-        return {
-            "isMasonMark": False,
-            "embedding": None
-        }
-
-    vector = embedder.vectorize(cropped)
+    target_image = cropped if cropped is not None else image
+    vector = embedder.vectorize(target_image)
 
     return {
-        "isMasonMark": True,
+        "isMasonMark": cropped is not None,
         "embedding": vector
     }
