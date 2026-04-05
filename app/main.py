@@ -12,6 +12,15 @@ detector = MasonDetector("models/yolo11n.pt")
 embedder = EmbeddingExtractor()
 
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint to verify service is running."""
+    return {
+        "status": "healthy",
+        "service": "Mason Mark Detection Service"
+    }
+
+
 @app.post("/process")
 async def process_image(file: UploadFile = File(...)):
     img_bytes = await file.read()
